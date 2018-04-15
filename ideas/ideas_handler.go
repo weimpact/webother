@@ -11,7 +11,7 @@ type Idea struct {
 	UserName    string
 }
 
-func SaveIdeaHandler(service IdeaService) http.HandlerFunc {
+func SaveIdeaHandler(service Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var idea Idea
 		if err := json.NewDecoder(r.Body).Decode(&idea); err != nil {
