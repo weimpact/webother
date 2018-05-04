@@ -4,15 +4,21 @@ import (
 	"fmt"
 
 	"github.com/kelseyhightower/envconfig"
+	"github.com/weimpact/webother/logger"
 )
 
 type Server struct {
 	Port int `default:"8080"`
 }
 
+type Store struct {
+	Location string `required:"true"`
+}
+
 type Application struct {
 	server Server
 	db     DB
+	store  Store
 }
 
 var app Application
@@ -26,7 +32,10 @@ func Load() {
 	if err := envconfig.Process("DB", &app.db); err != nil {
 		loadErr = append(loadErr, err)
 	}
-	fmt.Printf("%+v %+v", app, loadErr)
+	if err := envconfig.Process("STORE", &app.store); err != nil {
+		loadErr = append(loadErr, err)
+	}
+	logger.Errorf("%+v %+v", app, loadErr)
 }
 
 func AppPort() string {
@@ -35,4 +44,8 @@ func AppPort() string {
 
 func Database() DB {
 	return app.db
+}
+
+func StoreLocation() string {
+	return app.store.Location
 }

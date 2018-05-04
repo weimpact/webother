@@ -8,6 +8,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"github.com/weimpact/webother/config"
+	"github.com/weimpact/webother/files"
 	"github.com/weimpact/webother/ideas"
 )
 
@@ -18,8 +19,10 @@ func server() *mux.Router {
 		panic(fmt.Errorf("couldn't initialize db: %v", err))
 	}
 	ideaService := ideas.Service{DB: db}
+	fileService := files.Service{DB: db}
 	m.HandleFunc("/ideas", ideas.SaveIdeaHandler(ideaService)).Methods(http.MethodPut)
 	m.HandleFunc("/ideas", ideas.FetchIdeasHandler(ideaService)).Methods(http.MethodGet)
+	m.HandleFunc("/files", files.Upload(fileService)).Methods(http.MethodPut)
 	return m
 }
 
