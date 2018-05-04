@@ -8,5 +8,8 @@ import (
 
 func main() {
 	config.Load()
-	http.ListenAndServe(config.AppPort(), server())
+	err := http.ListenAndServe(config.AppPort(), server())
+	if err != nil {
+		panic(err)
+	}
 }
