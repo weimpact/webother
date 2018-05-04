@@ -19,6 +19,7 @@ func server() *mux.Router {
 	}
 	ideaService := ideas.Service{DB: db}
 	m.HandleFunc("/ideas", ideas.SaveIdeaHandler(ideaService)).Methods(http.MethodPut)
+	m.HandleFunc("/ideas", ideas.FetchIdeasHandler(ideaService)).Methods(http.MethodGet)
 	return m
 }
 
