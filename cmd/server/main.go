@@ -17,9 +17,8 @@ import (
 func main() {
 	config.Load()
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(1)
 	go start(server(), config.AppPort(), &wg)
-	go start(static(), config.StaticPort(), &wg)
 	wg.Wait()
 }
 

@@ -24,18 +24,13 @@ func server() *mux.Router {
 	m.HandleFunc("/ideas", ideas.FetchIdeasHandler(ideaService)).Methods(http.MethodGet)
 	m.HandleFunc("/files", files.Upload(fileService)).Methods(http.MethodPut)
 	m.HandleFunc("/ping", pong).Methods(http.MethodGet)
+	staticServer := http.FileServer(http.Dir(config.StoreLocation()))
+	m.PathPrefix("/static").Handler(http.StripPrefix("/static", staticServer))
 	return m
 }
 
 func pong(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"success": true}`))
-}
-
-func static() *mux.Router {
-	m := mux.NewRouter()
-	server := http.FileServer(http.Dir(config.StoreLocation()))
-	m.PathPrefix("/static").Handler(http.StripPrefix("/static", server))
-	return m
 }
 
 func DB(cfg config.DB) (*sqlx.DB, error) {
