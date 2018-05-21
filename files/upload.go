@@ -36,5 +36,7 @@ func Upload(fs Service) http.HandlerFunc {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
+		w.WriteHeader(http.StatusCreated)
 	}
 }

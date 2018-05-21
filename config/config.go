@@ -13,6 +13,7 @@ type Server struct {
 
 type Store struct {
 	Location string `required:"true"`
+	Port     int    `default:"9090"`
 }
 
 type Application struct {
@@ -48,4 +49,8 @@ func Database() DB {
 
 func StoreLocation() string {
 	return app.store.Location
+}
+
+func StaticPort() string {
+	return fmt.Sprintf(":%d", app.store.Port)
 }

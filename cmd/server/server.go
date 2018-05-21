@@ -26,6 +26,13 @@ func server() *mux.Router {
 	return m
 }
 
+func static() *mux.Router {
+	m := mux.NewRouter()
+	server := http.FileServer(http.Dir(config.StoreLocation()))
+	m.PathPrefix("/static").Handler(http.StripPrefix("/static", server))
+	return m
+}
+
 func DB(cfg config.DB) (*sqlx.DB, error) {
 	var err error
 	db, err := sqlx.Open(cfg.Driver, cfg.URL())
