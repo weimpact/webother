@@ -1,3 +1,4 @@
 vendor
 cmd/server/server
 .env
+*todo*

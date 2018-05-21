@@ -27,7 +27,7 @@ var app Application
 func Load() {
 	var loadErr []error
 
-	if err := envconfig.Process("APP", &app.server); err != nil {
+	if err := envconfig.Process("", &app.server); err != nil {
 		loadErr = append(loadErr, err)
 	}
 	if err := envconfig.Process("DB", &app.db); err != nil {
