@@ -23,7 +23,12 @@ func server() *mux.Router {
 	m.HandleFunc("/ideas", ideas.SaveIdeaHandler(ideaService)).Methods(http.MethodPut)
 	m.HandleFunc("/ideas", ideas.FetchIdeasHandler(ideaService)).Methods(http.MethodGet)
 	m.HandleFunc("/files", files.Upload(fileService)).Methods(http.MethodPut)
+	m.HandleFunc("/ping", pong).Methods(http.MethodGet)
 	return m
+}
+
+func pong(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte(`{"success": true}`))
 }
 
 func static() *mux.Router {
