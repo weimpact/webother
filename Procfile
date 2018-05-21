@@ -1,1 +1,1 @@
-web: ./run_service.sh
+web: ./run_service_ci.sh

@@ -21,7 +21,7 @@
 
 [metadata.heroku]
   root-package = "github.com/weimpact/webother"
-  go-version = "go1.10"
+  go-version = "go1.9"
   install = [ "./cmd/..."]
   ensure = "true"
 
